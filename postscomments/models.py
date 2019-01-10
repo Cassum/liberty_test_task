@@ -1,6 +1,5 @@
 from django.db import models
 
-# Create your models here.
 
 class Post(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -17,7 +16,8 @@ class Post(models.Model):
             'userId': self.user_id,
             'title': self.title,
             'body': self.body,
-            'comments': [comment.as_dict() for comment in self.comment_set.all()],
+            'comments': [comment.as_dict() for comment
+                         in self.comments.all()],
         }
 
 
@@ -26,6 +26,7 @@ class Comment(models.Model):
     post = models.ForeignKey(
         Post,
         on_delete=models.CASCADE,
+        related_name='comments',
     )
     name = models.TextField()
     email = models.EmailField()

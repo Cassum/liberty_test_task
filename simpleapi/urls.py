@@ -14,7 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path, include
+from rest_framework import routers
+
+from postscomments import views
+
+router = routers.DefaultRouter()
+router.register(r'posts', views.PostViewSet)
+router.register(r'comments', views.CommentViewSet)
 
 urlpatterns = [
     path('postscomments/', include('postscomments.urls')),
+    path('', include(router.urls)),
 ]
